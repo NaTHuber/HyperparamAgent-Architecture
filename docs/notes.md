@@ -17,7 +17,7 @@ Before focusing on a specific technical solution, I like to start by understandi
 
 This perspective comes from my background in physics. I find it difficult to design components in isolation without first building a mental model of the full pipeline. For me, architecture emerges from understanding interactions, constraints, and failure modes not from assembling modules independently.
 
-In this problem, I am not trying to propose a universal or optimal solution. Instead, I treat this as a minimal “hello-world” architecture: a concrete, simple example of how one might approach hyperparameter selection for probabilistic hardware solvers.
+In this problem, I treat this as a minimal “hello-world” architecture: a concrete, simple example of how one might approach hyperparameter selection for probabilistic hardware solvers.
 
 My goal is to explore how problem structure, physical intuition, and limited feedback can be combined into a system that proposes reasonable operating regimes, under realistic constraints such as expensive hardware access, imperfect simulators, and noisy outcomes.
 
@@ -59,13 +59,73 @@ Because of this coupling, the solver cannot be treated as a generic black box. H
 
 From this perspective, the role of the agent is to translate structural properties of a problem into reasonable operating regimes for the solver, while continuously adapting based on limited and costly feedback.
 
-This reframing exposes where uncertainty lives in the system:
+This reframing gives you and idea where uncertainty lives in the system:
 
 - in the mapping from abstract problem to hardware realization  
 - in the stochastic nature of solver outcomes  
 - in simulator–hardware mismatch  
 - and in distribution shifts across problem instances
 
+
+
+## 3. What Goes In / What Comes Out
+
+At its core, the hyperparameter agent acts as a mapper: it takes a structural description of a problem instance and outputs a proposal of experimental controls for the physical solver.
+
+### Input: Problem Instance
+
+The input to the agent is the problem already expressed in a mathematical form suitable for combinatorial optimization. This can appear in several equivalent representations:
+
+```mermaid
+    classDiagram
+    class Graph {
+        nodes: variables
+        edges: interactions/costs
+    }
+    
+    class J_matrix {
+        numerical coupling strengths
+        matrix representation
+    }
+    
+    class Hamiltonian {
+        energy function defining the optimization landscape
+        physical formulation
+    }
+    
+``` 
+
+Although these representations look different, they encode the same underlying structure.
+
+From the solver’s perspective, these are not semantic objects. The hardware does not “understand” the meaning of the problem. It responds to the statistical and structural properties of the induced energy landscape.
+
+Physically are quantities such as:
+
+- problem size  
+- connectivity patterns  
+- coupling strength distributions  
+- symmetry and degeneracy  
+- roughness of the landscape  
+
+These properties are super important for how the system explores states under noise and constraints.
+
+### Output: Solver Controls
+
+The output of the agent is not a solution to the optimization problem, but a proposal for how the solver should explore it.
+
+This typically could include parameters such as:
+
+- effective temperature or schedules  
+- coupling scaling  
+- chain strengths  
+- number of reads  
+- other device-specific controls  
+
+I interpret these hyperparameters as experimental controls: they define the conditions under which a stochastic physical system searches an energy landscape.
+
+Seen this way, hyperparameter selection becomes a problem of choosing operating regimes rather than pinpointing exact optimal values.
+
+The agent’s task is therefore not to predict precise settings, but to identify a region of parameter space where the solver is likely to behave robustly for a given class of problem instances.
 
 
 
