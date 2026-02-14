@@ -127,6 +127,35 @@ Seen this way, hyperparameter selection becomes a problem of choosing operating 
 
 The agent’s task is therefore not to predict precise settings, but to identify a region of parameter space where the solver is likely to behave robustly for a given class of problem instances.
 
+## 4. From Problem Structure to Experimental Controls 
+
+Interpreting hyperparameters as experimental controls fundamentally changes how I think about this problem.
+
+Once a combinatorial problem is mapped to a graph, J-matrix, or Hamiltonian, it implicitly defines an energy landscape. The solver’s dynamics, and therefore its performance, depend on how this landscape is sampled.
+
+From a physics perspective, this brings in familiar concepts from statistical mechanics:
+
+- exploration versus exploitation  
+- thermal noise  
+- metastable states  
+- rough versus smooth landscapes  
+- freezing and slow dynamics  
+
+Small changes in temperature schedules, coupling scalings, or chain strengths can qualitatively alter the solver’s behavior, pushing it into very different dynamical regimes.
+
+In this framing, hyperparameter selection becomes analogous to choosing experimental conditions in a physical system. We are not simply optimizing numbers; we are designing how a stochastic system navigates a high-dimensional energy surface.
+
+This perspective also highlights why treating the solver as a black box is limiting.
+
+Black-box optimization ignores the fact that problem structure directly shapes the energy landscape, and that solver behavior is strongly influenced by statistical properties such as connectivity, interaction strength distributions, and landscape roughness.
+
+Instead, I assume that there exists some regularity between these structural properties and reasonable operating regimes for the solver.
+
+The goal of the agent is therefore not to find globally optimal hyperparameters for each individual instance, but to infer a suitable dynamical regime conditioned on the structure of the problem.
+
+This is a more modest objective, but also a more realistic one under constraints such as limited hardware access, noisy feedback, and imperfect simulation.
+
+In this sense, the agent acts as a bridge between abstract problem structure and physical experimentation.
 
 
 
