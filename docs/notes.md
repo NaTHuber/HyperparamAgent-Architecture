@@ -44,7 +44,7 @@ At a high level, the pipeline can be viewed as:
     C --> D
     D --> E
 
-    style A fill: #2a5f7e
+    style A fill: #3b3b3b
     style B fill: #2a5f7e
     style C fill: #7e762a
     style D fill: #713e75
@@ -157,6 +157,37 @@ This is a more modest objective, but also a more realistic one under constraints
 
 In this sense, the agent acts as a bridge between abstract problem structure and physical experimentation.
 
+## 5. Representation: What Does the Agent Actually See?
 
+A central design question is how the problem instance is presented to the agent.
+
+Although the original input may be a full graph, J-matrix, or Hamiltonian, feeding these raw representations directly into a learning system is often impractical under realistic data constraints. Hardware runs are expensive, simulators are slow, and the number of labeled examples is limited.
+
+This forces a fundamental tradeoff between representational fidelity and sample efficiency.
+
+Rather than exposing the agent to the full problem structure, I propose extracting a small set of features that summarize properties of the induced energy landscape, the quantities that the physical solver actually “feels”.
+
+Examples of such features include:
+
+```mermaid
+graph TD
+    subgraph " " 
+        direction LR
+        A("Problem Size") 
+        B("Degree Distribution<br/>& Connectivity")
+        C("Statistics of<br/>Coupling Strengths")
+        D("Measures of<br/>Symmetry or Sparsity")
+        E("Rough Indicators of<br/>Landscape Complexity")
+    end
+    
+    A ~~~ B ~~~ C ~~~ D ~~~ E
+    
+    style A fill:#7e762a, stroke:#ffffff,stroke-width:4px
+    style B fill:#7e762a, stroke:#ffffff,stroke-width:4px
+    style C fill:#7e762a, stroke:#ffffff,stroke-width:4px
+    style D fill:#7e762a, stroke:#ffffff,stroke-width:4px
+    style E fill:#7e762a, stroke:#ffffff,stroke-width:4px
+
+```
 
 
