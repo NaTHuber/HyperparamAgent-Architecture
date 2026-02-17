@@ -198,4 +198,29 @@ However, given very limited training data, this simplification becomes necessary
 
 For a minimal architecture, I therefore favor a deliberately simple representation that enables the agent to learn broad correlations between problem structure and solver behavior. The objective at this stage is not precise prediction, but identification of reasonable operating regimes.
 
+## 6. Predict, Refine, Remember 
+
+I frame hyperparameter selection as a sequential decision process operating at multiple time scales and cost. 
+
+Given a problem instance and a limited experimental budget, the agent must answer three different questions:
+
+- What should generally work for this type of problem?
+- What is working here and now, under noise and hardware variability?
+- What have we learned historically that we should not forget?
+
+These correspond to three complementary layers:
+
+```mermaid 
+    graph LR
+    A[Predict]
+    B[Refine]
+    C[Remember]
+    
+    style A fill: #a9a96c
+    style B fill: #a9a96c
+    style C fill: #a9a96c
+
+```
+
+
 
