@@ -299,3 +299,72 @@ All outcomes are logged, including:
 These logs gradually improve the predictive model and strengthen the retrieval layer.
 
 Model updates occur periodically, not continuously, to avoid instability and overfitting to short-term noise.
+
+## 8. Explicit Assumptions & Failure Modes
+
+This architecture rests on a set of explicit assumptions. I do not make them because I believe they will always hold, but because any system built should clearly state the conditions under which it is expected to function.
+
+Making these assumptions explicit allows us to monitor when they stop holding and helps us to understand where failure is likely to occur.
+
+### Core Assumptions
+
+```mermaid 
+   graph LR 
+   A[ 1 <br> Structural Regularity Assumption]
+   B[ 2 <br> Energy-Landscape Dominance Assumption]
+   C[ 3 <br> Regime Over Pointwise Optimality]
+   D[ 4 <br> Limited but Informative Hardware Feedback]
+   E[ 5 <br> Reusable Historical Experience] 
+
+   A-->B
+   B-->C
+   C-->D
+   D-->E
+
+   style A fill: #86a9b4
+   style B fill: #86a9b4
+   style C fill: #86a9b4
+   style D fill: #86a9b4
+   style E fill: #86a9b4
+```
+
+**1. Structural Regularity Assumption**
+
+I assume that there exists some regular relationship between structural properties of a problem instance and reasonable hyperparameter operating regimes.
+
+In other words, similar energy landscapes should admit similar solver dynamics.
+
+If this regularity does not exist, predictive warm starts lose their value.
+
+
+**2. Energy-Landscape Dominance Assumption**
+
+I assume that solver behavior is primarily determined by statistical and structural properties of the induced energy landscape, not by semantic meaning or external metadata.
+
+If hidden factors dominate performance (e.g., hardware-specific embedding artifacts that are not captured by extracted features), the representation becomes insufficient.
+
+
+**3. Regime Over Pointwise Optimality**
+
+I assume that, in realistic hardware settings, it is more meaningful to aim for robust operating regimes rather than precise optimal hyperparameters.
+
+Due to noise, drift, and stochasticity, optimal settings may not be stable across runs.
+
+If hyperparameter sensitivity is extremely sharp or chaotic, local refinement may fail to stabilize performance.
+
+
+**4. Limited but Informative Hardware Feedback**
+
+I assume that a small number of hardware evaluations can provide meaningful signal for local refinement.
+
+If hardware noise overwhelms performance differences, refinement becomes unreliable.
+
+
+
+**5. Reusable Historical Experience**
+
+I assume that past experiments can inform future ones under well-defined similarity criteria.
+
+If distribution shift is strong or similarity metrics are poorly defined, retrieval mechanisms may introduce bias rather than efficiency.
+
+
