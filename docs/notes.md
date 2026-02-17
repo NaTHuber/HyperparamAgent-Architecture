@@ -221,6 +221,14 @@ These correspond to three complementary layers:
     style C fill: #a9a96c
 
 ```
+### Predict
 
+The predictive layer provides an initial proposal of solver operating regimes based on the structural features of the problem.
+
+This layer is trained offline using data sources such as simulators and historical runs. Its role is not to produce optimal values, but to suggest a reasonable starting region in hyperparameter space conditioned on problem structure.
+
+In practice, this can be implemented as a supervised regression model mapping problem features to coarse solver controls.
+
+The purpose of this layer is to drastically reduce the effective search space before any expensive hardware interaction.
 
 
