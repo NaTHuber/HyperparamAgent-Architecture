@@ -216,8 +216,8 @@ These correspond to three complementary layers:
     B[Refine]
     C[Remember]
     
-    style A fill: #a9a96c
-    style B fill: #a9a96c
+    style A fill: #69693e
+    style B fill: #8d8d5a
     style C fill: #a9a96c
 
 ```
@@ -263,3 +263,39 @@ Together, these three layers form a closed-loop system:
 They operate at different costs and time scales, but serve a single purpose: selecting robust operating regimes under uncertainty.
 
 I do not view these components as competing approaches. Instead, they are complementary parts of a single decision-making process designed for environments where data are scarce, feedback is noisy, and experiments are expensive.
+
+## 7. Learning Strategy: Offline + Online
+
+In this case I propose a hybrid learning approach that operates at multiple time scales and data sources.
+
+### Offline Learning: Learning Coarse Structure
+
+The predictive layer is trained offline using data sources:
+
+- simulator-generated runs  
+- historical hardware logs  
+- synthetic problem distributions  
+
+In this phase, the model learns broad statistical regularities. It builds a prior over hyperparameter space conditioned on problem structure.
+
+This prior reduces the region that needs to be explored on real hardware. Importantly, simulation is treated as a bootstrapping tool rather than as ground truth. Its role is to expose the model to structural trends, not to provide final answers.
+
+
+### Online Learning: Local Adaptation Under Cost Constraints
+
+Once deployed, the system interacts with real hardware.
+
+Hardware feedback is: stochastic, noisy , limited in quantity and potentially drifting over time.
+
+Online learning focuses on local adaptation rather than global retraining. Given a predicted operating regime, the refinement layer performs a small number of hardware evaluations to adjust parameters locally.
+
+All outcomes are logged, including:
+
+- problem features  
+- proposed hyperparameters  
+- performance metrics  
+- uncertainty estimates  
+
+These logs gradually improve the predictive model and strengthen the retrieval layer.
+
+Model updates occur periodically, not continuously, to avoid instability and overfitting to short-term noise.
