@@ -231,4 +231,17 @@ In practice, this can be implemented as a supervised regression model mapping pr
 
 The purpose of this layer is to drastically reduce the effective search space before any expensive hardware interaction.
 
+### Refine 
+Once the solver is run on real hardware, stochastic outcomes and simulator–hardware mismatch become apparent.
+
+The refinement layer uses a small number of hardware evaluations to locally adjust the initial proposal.
+
+Rather than performing global black-box optimization, refinement is intentionally lightweight and budgeted. Possible mechanisms include:
+
+- few-step Bayesian optimization  
+- bandit-style updates  
+- local parameter sweeps  
+
+The goal is to correct biases introduced by simulation and to adapt to device-specific behavior, not to exhaustively search the full parameter space.
+
 
