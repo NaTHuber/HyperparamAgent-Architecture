@@ -10,6 +10,7 @@
 5. Representation: What Does the Agent Actually See?
 6. Predict, Refine, Remember 
 7. Learning Strategy 
+8. Explicit Assumptions & Failure Modes
 
 ## 1. Motivation and Personal Framing
 
@@ -321,11 +322,11 @@ Making these assumptions explicit allows us to monitor when they stop holding an
    C-->D
    D-->E
 
-   style A fill: #86a9b4
-   style B fill: #86a9b4
-   style C fill: #86a9b4
-   style D fill: #86a9b4
-   style E fill: #86a9b4
+   style A fill: #6a8b96
+   style B fill: #6a8b96
+   style C fill: #6a8b96
+   style D fill: #6a8b96
+   style E fill: #6a8b96
 ```
 
 **1. Structural Regularity Assumption**
