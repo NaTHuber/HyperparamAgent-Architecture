@@ -190,4 +190,12 @@ graph TD
 
 ```
 
+These features act as a compressed description of the instance, capturing coarse statistical structure while discarding fine-grained relational details.
+
+This compression is not without cost. By summarizing the problem into a low-dimensional representation, the agent loses access to specific structural patterns that may be relevant in certain cases.
+
+However, given very limited training data, this simplification becomes necessary. 
+
+For a minimal architecture, I therefore favor a deliberately simple representation that enables the agent to learn broad correlations between problem structure and solver behavior. The objective at this stage is not precise prediction, but identification of reasonable operating regimes.
+
 
