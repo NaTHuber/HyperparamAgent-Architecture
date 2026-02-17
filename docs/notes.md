@@ -244,4 +244,22 @@ Rather than performing global black-box optimization, refinement is intentionall
 
 The goal is to correct biases introduced by simulation and to adapt to device-specific behavior, not to exhaustively search the full parameter space.
 
+### Remember
 
+Over time, the system accumulates experience across many problem instances.
+
+The memory layer stores past experiments and successful operating regimes, along with representations of the associated problem structures.
+
+When a new instance arrives, the agent can retrieve relevant historical cases and reuse previously effective regimes as additional guidance.
+
+This retrieval mechanism improves sample efficiency by avoiding redundant exploration, while remaining advisory rather than authoritative.
+
+Together, these three layers form a closed-loop system:
+
+- Predict provides a physics-informed warm start  
+- Refine adapts locally using scarce hardware feedback  
+- Remember leverages accumulated experience to accelerate future decisions  
+
+They operate at different costs and time scales, but serve a single purpose: selecting robust operating regimes under uncertainty.
+
+I do not view these components as competing approaches. Instead, they are complementary parts of a single decision-making process designed for environments where data are scarce, feedback is noisy, and experiments are expensive.
