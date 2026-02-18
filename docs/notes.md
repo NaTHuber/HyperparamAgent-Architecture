@@ -309,63 +309,49 @@ Making these assumptions explicit allows us to monitor when they stop holding an
 
 ### Core Assumptions
 
+
 ```mermaid 
-   graph LR 
-   A[ 1 <br> Structural Regularity Assumption]
-   B[ 2 <br> Energy-Landscape Dominance Assumption]
-   C[ 3 <br> Regime Over Pointwise Optimality]
-   D[ 4 <br> Limited but Informative Hardware Feedback]
-   E[ 5 <br> Reusable Historical Experience] 
-
-   A-->B
-   B-->C
-   C-->D
-   D-->E
-
-   style A fill: #6a8b96
-   style B fill: #6a8b96
-   style C fill: #6a8b96
-   style D fill: #6a8b96
-   style E fill: #6a8b96
+mindmap
+  root((Core Assumptions))
+    Structural Regularity Assumption
+    Energy-Landscape Dominance Assumption
+    Regime Over Pointwise Optimality
+    Limited but Informative Hardware Feedback
+    Reusable Historical Experience
 ```
 
-**1. Structural Regularity Assumption**
 
-I assume that there exists some regular relationship between structural properties of a problem instance and reasonable hyperparameter operating regimes.
-
+1. **Structural Regularity Assumption:** I assume that there exists some regular relationship between structural properties of a problem instance and reasonable hyperparameter operating regimes.
 In other words, similar energy landscapes should admit similar solver dynamics.
-
 If this regularity does not exist, predictive warm starts lose their value.
 
-
-**2. Energy-Landscape Dominance Assumption**
-
-I assume that solver behavior is primarily determined by statistical and structural properties of the induced energy landscape, not by semantic meaning or external metadata.
-
+2. **Energy-Landscape Dominance Assumption:** I assume that solver behavior is primarily determined by statistical and structural properties of the induced energy landscape, not by semantic meaning or external metadata.
 If hidden factors dominate performance (e.g., hardware-specific embedding artifacts that are not captured by extracted features), the representation becomes insufficient.
 
-
-**3. Regime Over Pointwise Optimality**
-
-I assume that, in realistic hardware settings, it is more meaningful to aim for robust operating regimes rather than precise optimal hyperparameters.
-
+3. **Regime Over Pointwise Optimality:** I assume that, in realistic hardware settings, it is more meaningful to aim for robust operating regimes rather than precise optimal hyperparameters.
 Due to noise, drift, and stochasticity, optimal settings may not be stable across runs.
-
 If hyperparameter sensitivity is extremely sharp or chaotic, local refinement may fail to stabilize performance.
 
-
-**4. Limited but Informative Hardware Feedback**
-
-I assume that a small number of hardware evaluations can provide meaningful signal for local refinement.
-
+4. **Limited but Informative Hardware Feedback:** I assume that a small number of hardware evaluations can provide meaningful signal for local refinement.
 If hardware noise overwhelms performance differences, refinement becomes unreliable.
 
-
-
-**5. Reusable Historical Experience**
-
-I assume that past experiments can inform future ones under well-defined similarity criteria.
-
+5. **Reusable Historical Experience:** I assume that past experiments can inform future ones under well-defined similarity criteria.
 If distribution shift is strong or similarity metrics are poorly defined, retrieval mechanisms may introduce bias rather than efficiency.
 
+### Failure Modes
 
+```mermaid 
+mindmap
+  root((Failure Modes))
+    Distribution Shift
+    Embedding Distortions
+    Hardware Drift
+    Over-Compression
+    False Similarity
+```
+Given these assumptions, I expect failure to occur primarily under the following conditions:
+1. **Distribution Shift:** If new problem instances differ substantially from the training distribution, predictive warm starts may mislead the system.
+2. **Embedding-Induced Distortions:** If hardware embedding introduces structural distortions not captured by the representation, the agent may systematically misestimate operating regimes.
+3. **Hardware Drift**: If device characteristics drift over time, previously learned correlations may become outdated. Without monitoring and recalibration, performance may degrade gradually.
+4. **Over-Compression of Representation:** If feature extraction discards critical structural information, the predictive layer may fail in instances where fine-grained topology matters.
+5. **False Similarity in Retrieval:** If the similarity metric used for memory retrieval is naive, the system may reuse regimes from superficially similar but dynamically distinct problems.
