@@ -320,7 +320,6 @@ mindmap
     Reusable Historical Experience
 ```
 
-
 1. **Structural Regularity Assumption:** I assume that there exists some regular relationship between structural properties of a problem instance and reasonable hyperparameter operating regimes.
 In other words, similar energy landscapes should admit similar solver dynamics.
 If this regularity does not exist, predictive warm starts lose their value.
@@ -355,3 +354,9 @@ Given these assumptions, I expect failure to occur primarily under the following
 3. **Hardware Drift**: If device characteristics drift over time, previously learned correlations may become outdated. Without monitoring and recalibration, performance may degrade gradually.
 4. **Over-Compression of Representation:** If feature extraction discards critical structural information, the predictive layer may fail in instances where fine-grained topology matters.
 5. **False Similarity in Retrieval:** If the similarity metric used for memory retrieval is naive, the system may reuse regimes from superficially similar but dynamically distinct problems.
+
+# Minimal Hello-World Architecture
+
+This is a minimal “hello-world” architecture for a hyperparameter agent, designed to be concrete without claiming universality.
+
+The goal is not to predict pointwise optimal hyperparameters, but to propose operating regimes and adapt locally under limited and costly feedback.
